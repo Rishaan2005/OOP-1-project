@@ -35,7 +35,7 @@ public:
     sf::Texture texture;
 
     Asteroid(float x, float y) : GameObject(x, y) {
-        texture.loadFromFile("asteroid.png"); 
+        texture.loadFromFile("asteroid.png"); //opm we moet nog de fotos selectern
         sprite.setTexture(texture);
 
         
