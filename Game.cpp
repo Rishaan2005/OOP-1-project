@@ -31,25 +31,26 @@ public:
 
 class Asteroid : public GameObject {
 public:
-    sf::CircleShape shape;
+    sf::Sprite sprite;
+    sf::Texture texture;
 
     Asteroid(float x, float y) : GameObject(x, y) {
-        shape.setRadius(30);
-        shape.setFillColor(sf::Color::Transparent);
-        shape.setOutlineColor(sf::Color::White);
-        shape.setOutlineThickness(2);
-        shape.setOrigin(30, 30);
-        shape.setPosition(position);
+        texture.loadFromFile("asteroid.png"); 
+        sprite.setTexture(texture);
 
-        velocity = sf::Vector2f(50, 50); // floating diagonally
+        
+        sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
+        sprite.setPosition(position);
+
+        velocity = sf::Vector2f(50, 50); 
     }
 
     void update(float dt) override {
         GameObject::update(dt);
-        shape.setPosition(position);
+        sprite.setPosition(position);
     }
 
     void draw(sf::RenderWindow& window) override {
-        window.draw(shape);
+        window.draw(sprite);
     }
 };
