@@ -35,7 +35,23 @@ public:
     sf::Texture texture;
 
     Asteroid(float x, float y) : GameObject(x, y) {
-        texture.loadFromFile(""); //opm we moet nog de fotos selectern
+        texture.loadFromFile("Asteroid(float x, float y) : GameObject(x, y) {
+    if (!texture.loadFromFile("/mnt/data/PC Computer - Wild Dogs - Asteroid.png")) {
+        std::cerr << "Fout bij laden van asteroid sprite sheet!" << std::endl;
+    }
+
+    // Kies 3e sprite uit de sheet (index 2)
+    int frameWidth = 51;
+    int frameHeight = 157;
+    int frameIndex = 2;
+
+    sprite.setTexture(texture);
+    sprite.setTextureRect(sf::IntRect(frameWidth * frameIndex, 0, frameWidth, frameHeight));
+    sprite.setOrigin(frameWidth / 2.0f, frameHeight / 2.0f);
+    sprite.setPosition(position);
+
+    velocity = sf::Vector2f(50, 50); 
+}
         sprite.setTexture(texture);
 
         
