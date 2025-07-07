@@ -1,19 +1,25 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <iostream> // Include for std::cerr
 #include <cmath>
 #include <vector>
 #include <random>
 
-//ScreenResulution//
+// Screen Resolution
 const int W = 1920;
 const int H = 1080;
 
-//Controls//
-const auto UP = Keyboard::UP;
-const auto LEFT = Keyboard::LEFT;
-const auto RIGHT = Keyboard::RIGHT;
-const auto FIRE = Keyboard::Z;
+// Controls
+const sf::Keyboard::Key UP = sf::Keyboard::Up;
+const sf::Keyboard::Key LEFT = sf::Keyboard::Left;
+const sf::Keyboard::Key RIGHT = sf::Keyboard::Right;
+const sf::Keyboard::Key FIRE = sf::Keyboard::Z;
+
+// Asteroid sprite constants
+const int FRAME_WIDTH = 51;
+const int FRAME_HEIGHT = 157;
+const int FRAME_INDEX = 2;
 
 class GameObject {
 public:
@@ -35,27 +41,13 @@ public:
     sf::Texture texture;
 
     Asteroid(float x, float y) : GameObject(x, y) {
-        texture.loadFromFile("Asteroid(float x, float y) : GameObject(x, y) {
-    if (!texture.loadFromFile("/mnt/data/PC Computer - Wild Dogs - Asteroid.png")) {
-        std::cerr << "Fout bij laden van asteroid sprite sheet!" << std::endl;
-    }
+        if (!texture.loadFromFile("/mnt/data/PC Computer - Wild Dogs - Asteroid.png")) {
+            std::cerr << "Error loading asteroid sprite sheet!" << std::endl;
+        }
 
-    // Kies 3e sprite uit de sheet (index 2)
-    int frameWidth = 51;
-    int frameHeight = 157;
-    int frameIndex = 2;
-
-    sprite.setTexture(texture);
-    sprite.setTextureRect(sf::IntRect(frameWidth * frameIndex, 0, frameWidth, frameHeight));
-    sprite.setOrigin(frameWidth / 2.0f, frameHeight / 2.0f);
-    sprite.setPosition(position);
-
-    velocity = sf::Vector2f(50, 50); 
-}
         sprite.setTexture(texture);
-
-        
-        sprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
+        sprite.setTextureRect(sf::IntRect(FRAME_WIDTH * FRAME_INDEX, 0, FRAME_WIDTH, FRAME_HEIGHT));
+        sprite.setOrigin(FRAME_WIDTH / 2.0f, FRAME_HEIGHT / 2.0f);
         sprite.setPosition(position);
 
         velocity = sf::Vector2f(50, 50); 
