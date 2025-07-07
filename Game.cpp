@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
-#include <iostream> // Include for std::cerr
+#include <iostream> 
 #include <cmath>
 #include <vector>
 #include <random>
