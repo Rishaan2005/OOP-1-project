@@ -36,13 +36,14 @@ There is some preparation required to build this game yourself.
 5. Make sure to place everything in your project folder directory!
 
 ### Assets used
-1. Background image - https://deep-fold.itch.io/space-background-generator
-2. Spaceship image - https://opengameart.org/content/spaceship-9#
-3. Asteroid sprite - https://opengameart.org/content/brown-asteroid
-4. Background soundtrack - https://pixabay.com/sound-effects/retro-wave-style-track-59892/
-5. Jingle sound effect - https://mixkit.co/free-sound-effects/game/
-6. Shooting sound effect - https://mixkit.co/free-sound-effects/shot/
-7. Rest of the sound effects - https://pixabay.com/sound-effects/
+1. Font - https://fonts.google.com/specimen/Press+Start+2P
+2. Background image - https://deep-fold.itch.io/space-background-generator
+3. Spaceship image - https://opengameart.org/content/spaceship-9#
+4. Asteroid sprite - https://opengameart.org/content/brown-asteroid
+5. Background soundtrack - https://pixabay.com/sound-effects/retro-wave-style-track-59892/
+6. Jingle sound effect - https://mixkit.co/free-sound-effects/game/
+7. Shooting sound effect - https://mixkit.co/free-sound-effects/shot/
+8. Rest of the sound effects - https://pixabay.com/sound-effects/
 
 
 
