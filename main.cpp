@@ -26,7 +26,7 @@ int main()
 
 
 	// declaratie van de game window met de gekozen dimensies
-	RenderWindow gameWindow(VideoMode({ WINDOW_LENGTE, WINDOW_BREEDTE }), "Game Name", Style::Default);
+	RenderWindow gameWindow(VideoMode({ WINDOW_LENGTE, WINDOW_BREEDTE }), "Blasteroids", Style::Default);
 
 	// achtergrond texture declaratie, indien de foto gevonden wordt dan runt de game niet
 	// zonder de foto wordt de game experience geruined
