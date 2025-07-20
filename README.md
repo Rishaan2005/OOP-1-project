@@ -32,7 +32,8 @@ There is some preparation required to build this game yourself.
 1. Download [VS Community 2022](https://visualstudio.microsoft.com/vs/community/).
 2. Download [SFML 2.6.2](https://www.sfml-dev.org/download/sfml/2.6.2/).
 3. Setup SFML using this [YouTube video](https://youtu.be/qvg8BXXWpCE?si=WVfaDAgOtL5sJIRj) or just follow the instructions on this [webpage](https://www.sfml-dev.org/tutorials/2.6/).
-4. Finally, download the zip file. It contains the header file, implementation file, and main file, as well as all the game assets.
+4. Download the zip file (see Releases). It contains the header file, implementation file, and main file, as well as all the game assets.
+5. Make sure to place everything in your project folder directory!
 
 ### Assets used
 1. Background image - https://deep-fold.itch.io/space-background-generator
@@ -46,6 +47,14 @@ There is some preparation required to build this game yourself.
 
 
 
+# Releases
+Here you can download the zip file that contains the source files as well as the game assets.
+
+Download [blasteroids.zip](https://github.com/user-attachments/files/21337966/blasteroids.zip).
 
 
-**Note:** This game is our project assignment for the course Object Oriented Programming 1 for the Electrical Engineering undergraduate program at the Anton de Kom University of Suriname (AdekUS). Thanks very much to everyone that contributed to this project.
+
+
+
+### Note
+This game is our project assignment for the course Object Oriented Programming 1 for the Electrical Engineering undergraduate program at the Anton de Kom University of Suriname (AdekUS). The game may or may not receive updates in the future, but for now we hope you have fun playing it (even though it is very simple). Thanks very much to everyone that contributed to this project.
