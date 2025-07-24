@@ -1,7 +1,7 @@
 # Blasteroids
 A simple 2D game built using C++ and SFML based on the classic Space Shooter genre.
 
-<img width="1280" height="720" alt="Screenshot 2025-07-20 175859" src="https://github.com/user-attachments/assets/137b8d93-10c8-4241-a9b8-bea79e18d040" /> 
+<img width="1282" height="752" alt="image" src="https://github.com/user-attachments/assets/bab75e5d-8d73-4b20-b602-50813064cbdd" />
 
 ## Objective
 Survive for as long as possible in this simple space shooter game! The captain aboard a space cruiser, currently passing through 
@@ -29,7 +29,7 @@ able to safely return home and complete their mission because of you.
 
 ## Setup
 There is some preparation required to build this game yourself.
-1. Download [VS Community 2022](https://visualstudio.microsoft.com/vs/community/).
+1. Download [VS Community 2022](https://visualstudio.microsoft.com/vs/community/) and set it up with the proper C++ environment.
 2. Download [SFML 2.6.2](https://www.sfml-dev.org/download/sfml/2.6.2/).
 3. Setup SFML using this [YouTube video](https://youtu.be/qvg8BXXWpCE?si=WVfaDAgOtL5sJIRj) or just follow the instructions on this [webpage](https://www.sfml-dev.org/tutorials/2.6/).
 4. Download the zip file (see Releases). It contains the header file, implementation file, and main file, as well as all the game assets.
@@ -51,7 +51,7 @@ There is some preparation required to build this game yourself.
 # Releases
 Here you can download the zip file that contains the source files as well as the game assets.
 
-Download [blasteroids.zip](https://github.com/user-attachments/files/21337966/blasteroids.zip).
+Download [blasteroids_1.1.zip](https://github.com/user-attachments/files/21419852/blasteroids_1.1.zip).
 
 
 
