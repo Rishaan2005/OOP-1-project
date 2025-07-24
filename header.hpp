@@ -6,9 +6,9 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream> // iostream voor eventuele errors door het niet vinden van bestanden
-#include <vector>
+#include <vector> // voor het opslaan van de asteroids en bullets in een vector
 #include <random> // voor random getallen, gebruikt voor het spawnen van asteroids
-#include <cmath>
+#include <cmath> // voor abs functie, gebruikt voor het controleren van de afstand tussen asteroids
 
 // gebruik van namespace om de code leesbaarder te maken en zodat er minder getypt hoeft te worden
 using namespace sf;

@@ -9,7 +9,7 @@ void resetGame(Spaceship& spaceship, vector<Bullet>& bullets, vector<Asteroid>& 
 	asteroidClock.restart();
 	bulletClock.restart();
 	gameClock.restart();
-	
+
 }
 
 int main()
@@ -105,7 +105,7 @@ int main()
 
 	// tweede sound fx voor de projectile (bullets)
 	SoundBuffer laserProjectile;
-	if(!laserProjectile.loadFromFile("laser_shot.wav"))
+	if (!laserProjectile.loadFromFile("laser_shot.wav"))
 	{
 		cout << "Bullet sound effect niet gevonden." << endl;
 		return -1;
@@ -127,7 +127,7 @@ int main()
 
 	// vierde sound fx voor de score jingle
 	SoundBuffer scoreJingle;
-	if( !scoreJingle.loadFromFile("score_jingle.wav"))
+	if (!scoreJingle.loadFromFile("score_jingle.wav"))
 	{
 		cout << "Score jingle sound effect niet gevonden." << endl;
 		return -1;
@@ -155,15 +155,34 @@ int main()
 				gameWindow.close();
 			}
 
-			// hier wordt gekeken of de start button is geklikt
-			if (onStartScreen && (gameRunning.type == Event::MouseButtonPressed && gameRunning.mouseButton.button == Mouse::Left))
+			if (onStartScreen)
 			{
-
-				Vector2f mousePos(gameRunning.mouseButton.x, gameRunning.mouseButton.y);
-				if (startButton.getGlobalBounds().contains(mousePos))
+				// hier wordt gekeken of de start button is geklikt of of de spacebar is ingedrukt
+				if ((gameRunning.type == Event::MouseButtonPressed && gameRunning.mouseButton.button == Mouse::Left &&
+					startButton.getGlobalBounds().contains(Vector2f(gameRunning.mouseButton.x, gameRunning.mouseButton.y)))
+					|| (gameRunning.type == Event::KeyPressed && gameRunning.key.code == Keyboard::Space))
 				{
 					onStartScreen = false;
-					jingleSound.play(); // speel de jingle sound effect af bij het starten van het spel
+					jingleSound.play();
+					resetGame(spaceship, bullets, asteroids, asteroidClock, bulletClock, gameClock);
+					score = 0; // Ensure score is reset when starting a new game
+					lastJingleScore = 0;
+					scoreText.setString("Score:0");
+				}
+			}
+			else if (gameOver) // indien game over is, dan wordt de game over screen getoond
+			{
+				// hier wordt gekeken of de game over button is geklikt of of de spacebar is ingedrukt
+				if ((gameRunning.type == Event::MouseButtonPressed && gameRunning.mouseButton.button == Mouse::Left &&
+					gameOverButton.getGlobalBounds().contains(Vector2f(gameRunning.mouseButton.x, gameRunning.mouseButton.y)))
+					|| (gameRunning.type == Event::KeyPressed && gameRunning.key.code == Keyboard::Space)
+					)
+				{
+					gameOver = false;
+					onStartScreen = true; // terug naar het start scherm
+					score = 0;
+					lastJingleScore = 0; // reset de score en last jingle score
+					scoreText.setString("Score:0");
 					resetGame(spaceship, bullets, asteroids, asteroidClock, bulletClock, gameClock);
 				}
 			}
@@ -179,31 +198,16 @@ int main()
 			gameWindow.draw(startText);
 		}
 		else if (gameOver) // indien game over is, dan wordt de game over screen getoond
-			{
-			gameWindow.clear(Color::Black); // clear de window voor de game over screen
+		{
 			gameWindow.draw(backgroundSprite);
 			gameWindow.draw(gameOverText);
 			gameWindow.draw(gameOverButton);
-
-
-				if (gameRunning.type == Event::MouseButtonPressed && gameRunning.mouseButton.button == Mouse::Left)
-				{
-					Vector2f mousePos(gameRunning.mouseButton.x, gameRunning.mouseButton.y);
-					if (gameOverButton.getGlobalBounds().contains(mousePos))
-					{
-						gameOver = false;
-						onStartScreen = true; // als men klikt op de game over button, dan gaat de player terug naar het start scherm
-						score = 0; // reset de score
-						lastJingleScore = 0;
-						scoreText.setString("Score:0"); // ook moet de score text worden gereset
-						resetGame(spaceship, bullets, asteroids, asteroidClock, bulletClock, gameClock);
-					}
-				}
-			}
-
+		}
 		else
 		{
-			// main game logic and drawing komt hier
+			// vanaf hier begint de game logica voor het spel zelf
+
+			// teken de achtergrond
 			gameWindow.draw(backgroundSprite);
 
 			// spaceship
@@ -212,7 +216,7 @@ int main()
 			spaceship.drawShip(gameWindow);
 
 			// bullets
-			if(bulletClock.getElapsedTime().asSeconds() >= 0.8f)
+			if (bulletClock.getElapsedTime().asSeconds() >= 0.8f) // de bullets worden per 0.8 seconden ageschoten en vanaf het bovenkant van de spaceship worden ze getekend en geupdate
 			{
 				Vector2f shipPos = spaceship.getPosition();
 				Vector2f shipSize = spaceship.getSize();
@@ -220,57 +224,58 @@ int main()
 				bulletSound.play(); // speel de bullet sound effect af bij het schieten
 				bulletClock.restart();
 			}
-			
+
 			for (auto& bullet : bullets)
 			{
 				bullet.updateBullet(deltaTime);
 				bullet.drawBullet(gameWindow);
 			}
-			// de bullets worden per 0.8 seconden ageschoten en vanaf het bovenkant van de spaceship
-			// worden ze getekend en geupdate
+			
 
 			// asteroids
 			if (asteroidClock.getElapsedTime().asSeconds() >= 1.0f)
 			{
-					// gebruik van <random> zodat de asteroids willekeurig worden gespawned
-					random_device rd;
-					mt19937 gen(rd());
-					uniform_int_distribution<> asteroidCountDistribution(3, 10);
-					uniform_real_distribution<> asteroidPosDistribution(-340.0f, 340.0f);
+				// gebruik van <random> zodat de asteroids willekeurig worden gespawned
+				random_device rd;
+				mt19937 gen(rd());
+				uniform_int_distribution<> asteroidCountDistribution(3, 10);
+				uniform_real_distribution<> asteroidPosDistribution(-340.0f, 340.0f); // willekeurige positie van de asteroids tussen -340 en 340
 
-					int count = asteroidCountDistribution(gen);
-					vector<float> positions;
+				int count = asteroidCountDistribution(gen);
+				vector<float> positions;
 
-					// ze moeten niet overlappen, anders kan het lastig worden voor de player
-					for (int i = 0; i < count; ++i) {
-						float pos;
-						bool validPosition;
-						int attempts = 0;
+				// ze moeten niet overlappen, anders kan het lastig worden voor de player
+				for (int i = 0; i < count; ++i) {
+					float pos;
+					bool validPosition;
+					int attempts = 0;
 
-						do {
-							validPosition = true;
-							pos = 640.0f + asteroidPosDistribution(gen);
+					do {
+						validPosition = true;
+						pos = 640.0f + asteroidPosDistribution(gen);
 
-							// hier wordt gekeken of de positie van de asteroid niet te dicht bij een andere asteroid is
-							for (float existingPos : positions) {
-								if (abs(pos - existingPos) < 55.0f) 
-								{
-									validPosition = false;
-									break;
-								}
+						// hier wordt gekeken of de positie van de asteroid niet te dicht bij een andere asteroid is
+						for (float existingPos : positions) {
+							if (abs(pos - existingPos) < 55.0f)
+							{
+								validPosition = false;
+								break;
 							}
-							attempts++;
-						} while (!validPosition && attempts < 50);
-
-						if (validPosition) {
-							positions.push_back(pos);
-							asteroids.emplace_back(pos, 0.0f);
 						}
-					}
+						attempts++;
+					} while (!validPosition && attempts < 50);
 
+					if (validPosition) {
+						positions.push_back(pos);
+						asteroids.emplace_back(pos, 0.0f);
+					}
+				}
+
+				// reset de clock zodat de asteroids niet te snel worden gespawned
 				asteroidClock.restart();
 			}
 
+			// update en teken de asteroids
 			for (auto& asteroid : asteroids)
 			{
 				asteroid.updateAsteroid(deltaTime);
@@ -279,7 +284,7 @@ int main()
 
 			// draw Score
 			gameWindow.draw(scoreText);
-			gameWindow.draw(scoreNumber);
+			 
 
 			// Collision checking
 
@@ -297,7 +302,7 @@ int main()
 						bullet.setBulletInactive();
 						asteroid.setasDestroyed();
 						asteroidDestroyed.play(); // speel de sound effect af bij het vernietigen van een asteroid
-					
+
 						// +1 toevoegen aan de score
 						score++;
 						scoreText.setString("Score:" + to_string(score));
@@ -305,7 +310,7 @@ int main()
 					}
 				}
 			}
-			
+
 			// tussen asteroids en spaceship
 			for (auto& asteroid : asteroids)
 			{
@@ -316,11 +321,9 @@ int main()
 					// Game Over
 					gameOver = true;
 					break; // break de loop om te voorkomen dat we dezelfde asteroid meerdere keren verwerken
-					
+
 				}
 			}
-
-			
 
 			// inactieve game objecten verwijderen
 			bullets.erase(remove_if(bullets.begin(), bullets.end(),
@@ -331,7 +334,7 @@ int main()
 
 		}
 
-		if (score !=0 && score % 10 == 0 && score != lastJingleScore)
+		if (score != 0 && score % 10 == 0 && score != lastJingleScore)
 		{
 			scoreJingleSound.play(); // speel de score jingle af bij het behalen van een score die een veelvoud is van 10 (dit is voor de game experience)
 			lastJingleScore = score; // update de last jingle score zodat de jingle niet te vaak wordt afgespeeld
